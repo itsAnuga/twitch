@@ -4,4 +4,4 @@
 /.env.development
 /.env.staging
 /.env.production
-/response.json
+/token.json

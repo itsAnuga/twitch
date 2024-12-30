@@ -1,24 +1,16 @@
 import fs from "node:fs";
 import * as dotenv from "dotenv";
+// import token from "./token.json";
 
 dotenv.config();
 
-const url = "https://id.twitch.tv/oauth2/token";
+function capitalize(word) {
+  return String(word).charAt(0).toUpperCase() + String(word).slice(1);
+}
 
-async function getData(url) {
+async function getData(url = "", options = {}) {
   try {
-    url +=
-      "?" +
-      "client_id=" +
-      process.env.CLIENT_ID +
-      "&" +
-      "client_secret=" +
-      process.env.CLIENT_SECRET +
-      "&" +
-      "grant_type=" +
-      process.env.GRANT_TYPE;
-
-    const response = await fetch(url, { method: "POST" });
+    const response = await fetch(url, options);
 
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
@@ -30,13 +22,47 @@ async function getData(url) {
   }
 }
 
-let response = await getData(url);
-
-console.info(response);
-
-try {
-  fs.writeFileSync("response.json", await JSON.stringify(response));
-  // file written successfully
-} catch (err) {
-  console.error(err);
+async function validate(token) {
+  return await getData("https://id.twitch.tv/oauth2/validate", {
+    headers: { Authorization: capitalize(token.token_type) + " " + token.access_token },
+    method: "GET",
+  });
 }
+
+let token = undefined;
+
+if (fs.existsSync("token.json")) {
+  try {
+    token = JSON.parse(fs.readFileSync("./token.json", "utf8"));
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+if (token === undefined) {
+  let url =
+    "https://id.twitch.tv/oauth2/token" +
+    "?" +
+    "client_id=" +
+    process.env.CLIENT_ID +
+    "&" +
+    "client_secret=" +
+    process.env.CLIENT_SECRET +
+    "&" +
+    "grant_type=" +
+    process.env.GRANT_TYPE;
+
+  let token = await getData(url, { method: "POST" });
+
+  console.info(token);
+
+  try {
+    fs.writeFileSync("token.json", await JSON.stringify(token));
+    // file written successfully
+  } catch (err) {
+    console.error(err);
+  }
+
+}
+
+console.info(await validate(token));

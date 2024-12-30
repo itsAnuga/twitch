@@ -1,0 +1,16 @@
+{
+  "author": "",
+  "dependencies": {
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {},
+  "description": "",
+  "license": "ISC",
+  "main": "index.js",
+  "name": "twitch",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type":"module",
+  "version": "1.0.0"
+}

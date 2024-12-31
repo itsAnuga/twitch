@@ -1,9 +1,9 @@
 {
   "author": "",
   "dependencies": {
-    "dotenv": "^16.4.7"
+    "dotenv": "^16.4.7",
+    "ws": "^8.18.0"
   },
-  "devDependencies": {},
   "description": "",
   "license": "ISC",
   "main": "index.js",
@@ -11,6 +11,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "type":"module",
+  "type": "module",
   "version": "1.0.0"
 }

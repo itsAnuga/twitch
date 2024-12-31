@@ -1,6 +1,6 @@
 import fs from "node:fs";
+// import { URLSearchParams } from 'node:url'
 import * as dotenv from "dotenv";
-// import token from "./token.json";
 
 dotenv.config();
 
@@ -22,6 +22,21 @@ async function getData(url = "", options = {}) {
   }
 }
 
+async function refresh(token) {
+  return await getData("https://id.twitch.tv/oauth2/token", {
+    body: new URLSearchParams({
+      grant_type: "refresh_token",
+      refresh_token: `${token.refresh_token}`,
+      client_id: `${process.env.CLIENT_ID}`,
+      client_secret: `${process.env.CLIENT_SECRET}`,
+    }).toString(),
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    method: "POST",
+  });
+}
+
 async function validate(token) {
   return await getData("https://id.twitch.tv/oauth2/validate", {
     headers: { Authorization: capitalize(token.token_type) + " " + token.access_token },
@@ -29,6 +44,7 @@ async function validate(token) {
   });
 }
 
+let response = {};
 let token = undefined;
 
 if (fs.existsSync("token.json")) {
@@ -52,7 +68,7 @@ if (token === undefined) {
     "grant_type=" +
     process.env.GRANT_TYPE;
 
-  let token = await getData(url, { method: "POST" });
+  token = await getData(url, { method: "POST" });
 
   console.info(token);
 
@@ -62,7 +78,12 @@ if (token === undefined) {
   } catch (err) {
     console.error(err);
   }
-
 }
 
 console.info(await validate(token));
+
+// response = await refresh(token);
+
+// console.info(response);
+
+// console.info(await validate(token));

@@ -16,7 +16,10 @@ cd twitch
 ```
 
 Create a `.env` file, copy/paste `.env-example` for pre-defined variables and fill in the blanks.
+
 The variable values, you'll find in the Dev Console on Twitch, on the different accounts.
+
+Make the `tokens` folder, writeable, by the user that is going to run the bot.
 
 ### Install dependencies
 
@@ -24,7 +27,7 @@ The variable values, you'll find in the Dev Console on Twitch, on the different 
 npm install
 ```
 
-### ~~Fetch Bot Account Application Access Token~~
+#### ~~Fetch Bot Account Application Access Token~~
 
 ~~Can be run before each time the bot starts~~
 
@@ -57,7 +60,7 @@ You will be redirect back to `http://localhost:3000` if there no errors. (file p
 
 *Now you can exit the `npm run http`*
 
-#### Start the Bot
+### Start the Bot
 
 ```
 npm run bot

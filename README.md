@@ -32,7 +32,7 @@ npm install
 npm start
 ```
 
-### Install dependencies
+### Run the webserver (express)
 
 ```
 npm run http

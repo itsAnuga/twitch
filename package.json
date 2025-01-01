@@ -2,14 +2,17 @@
   "author": "",
   "dependencies": {
     "dotenv": "^16.4.7",
+    "express": "^4.21.2",
     "ws": "^8.18.0"
   },
   "description": "",
   "license": "ISC",
-  "main": "index.js",
+  "main": "src/index.js",
   "name": "twitch",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "bot": "clear && node src/bot.js",
+    "http": "clear && node src/server.js",
+    "start": "clear && node src/index.js"
   },
   "type": "module",
   "version": "1.0.0"

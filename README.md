@@ -45,7 +45,9 @@ npm run http
 Login with your Bot Account.
 
 You will be redirect back to `http://localhost:3000` if there no errors. (file permission/connections/variables etc)
+
 Open a new tab/window and visit `https://twitch.tv` and logout from the Bot Account.
+
 Go back to `http://localhost:3000`.
 
 #### Visit: *Step 2*

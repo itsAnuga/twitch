@@ -1,0 +1,7 @@
+{
+  "access_token": "mzfppdvofw3nnuwep2yleh9136tnml",
+  "expires_in": 5516642,
+  "scope": ["channel:bot", "user:bot", "user:read:chat", "user:write:chat"],
+  "token_type": "bearer",
+  "expires_in_seconds": 1735713356642
+}

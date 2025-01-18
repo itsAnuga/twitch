@@ -1,0 +1,18 @@
+{
+  "bot": {
+    "access_token": "bit5c1ghn28wo1kolnbykzjxlak0s5",
+    "expires_in": 13677,
+    "refresh_token": "4r31mqnz2qv0b4jfouf1u6umgrydmin0hq8e945wrw6jvzvbnu",
+    "scope": ["channel:bot", "user:bot", "user:read:chat", "user:write:chat"],
+    "token_type": "bearer",
+    "expires_in_seconds": 1736031054677
+  },
+  "streamer": {
+    "access_token": "kmebrjfgkpfo96rbkbg22yags4dxzn",
+    "expires_in": 13761,
+    "refresh_token": "4yub999xch63owl0nnfps065m2363y8xom7si2rs69zh1zkh6t",
+    "scope": ["channel:bot"],
+    "token_type": "bearer",
+    "expires_in_seconds": 1736031055761
+  }
+}

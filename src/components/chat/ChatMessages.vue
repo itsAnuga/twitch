@@ -1,5 +1,9 @@
 <script lang="ts" setup>
 const { messages } = defineProps(['messages'])
+
+const message = (message) => {
+  return message;
+}
 </script>
 
 <style>

@@ -1,24 +1,21 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import type { Ref } from "vue";
+
+import { RouterLink, RouterView, useRoute } from "vue-router";
+import { onMounted, onBeforeMount, ref } from "vue";
+import HelloWorld from "./components/HelloWorld.vue";
+
+const access_token: Ref<String> = ref("");
+const route = useRoute();
+
+// console.info(route.query);
+
+onMounted(() => {
+  if (route.query.access_token !== undefined) {
+    access_token.value = `?access_token=${route.query.access_token}`;
+  }
+});
 </script>
-
-<template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/todo">ToDO</RouterLink>
-        <RouterLink to="/chat">Chat</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
-</template>
 
 <style scoped>
 header {
@@ -83,3 +80,26 @@ nav a:first-of-type {
   }
 }
 </style>
+
+<template>
+  <header>
+    <img
+      alt="Vue logo"
+      class="logo"
+      src="./assets/logo.svg"
+      width="125"
+      height="125"
+    />
+    <div class="wrapper">
+      <HelloWorld msg="You did it!" />
+      <nav>
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/about">About</RouterLink>
+        <RouterLink v-bind:to="`/emojies${access_token}`">Emojis</RouterLink>
+        <RouterLink to="/chat">Chat</RouterLink>
+        <RouterLink to="/todo">ToDO</RouterLink>
+      </nav>
+    </div>
+  </header>
+  <RouterView />
+</template>

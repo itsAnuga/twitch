@@ -1,67 +1,73 @@
 <script lang="ts" setup>
-import { onBeforeMount, onMounted, ref, type Ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { onBeforeMount, onMounted, ref, type Ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import {
-  handleWebSocketMessage /* , registerEventSubListeners */ /* , sendChatMessage */ /* , WebSocketClient */,
-} from '@/bot'
-import { emotes as Emotes } from '@/twitch'
-import ChatMessages from '@/components/chat/ChatMessages.vue'
+  handleWebSocketMessage,
+  // registerEventSubListeners,
+  // sendChatMessage,
+  // WebSocketClient,
+} from "@/bot";
+import { emotes as Emotes } from "@/twitch";
+import ChatMessages from "@/components/chat/ChatMessages.vue";
+import Message from "@/message";
 
-const emotes: Ref = ref({})
-const message: Ref = ref({})
-const messages: Ref = ref([])
-const router = useRouter()
-const route = useRoute()
+const emotes: Ref = ref({});
+const message: Ref = ref({});
+const messages: Ref = ref([]);
+const router = useRouter();
+const route = useRoute();
 
 const WebSocketClient = (token: Object, env: Object, ids: Object) => {
-  const Client = new WebSocket('wss://eventsub.wss.twitch.tv/ws')
+  const Client = new WebSocket("wss://eventsub.wss.twitch.tv/ws");
 
-  Client.addEventListener('error', console.error)
+  Client.addEventListener("error", console.error);
 
-  Client.addEventListener('message', (data) => {
-    message.value = handleWebSocketMessage(data, token, env, ids)
+  Client.addEventListener("message", (data) => {
+    message.value = handleWebSocketMessage(data, token, env, ids);
 
     if (message.value === false) {
-      return
+      return;
     }
 
-    if (message.value.chatter_user_id === '19264788') {
-      return
+    if (message.value.chatter_user_id === "19264788") {
+      return;
     }
 
-    if (message.value.chatter_user_id === '93467980') {
-      return
+    if (message.value.chatter_user_id === "93467980") {
+      return;
     }
-
-    messages.value.push(message.value)
 
     if (messages.value.length > 12) {
-      messages.value.shift()
+      messages.value.shift();
     }
-  })
 
-  Client.addEventListener('open', console.log)
-}
+    Message(message);
+
+    messages.value.push(message.value);
+  });
+
+  Client.addEventListener("open", console.log);
+};
 
 onBeforeMount(async () => {
-  let username = ''
+  let username = "";
 
   if (route.query.username !== undefined) {
-    username = `?username=${route.query.username}`
+    username = `?username=${route.query.username}`;
   }
 
   if (route.query.access_token === undefined && route.query.id === undefined) {
-    router.push(`/api/token/refresh${username}`)
+    router.push(`/api/token/refresh${username}`);
   }
-})
+});
 
 onMounted(async () => {
   emotes.value = await Emotes(
     { bot: import.meta.env.VITE_BOT_CLIENT_ID },
     { bot: { access_token: route.query.access_token } },
-  )
+  );
 
-  console.info(emotes.value)
+  // console.info(emotes.value);
 
   WebSocketClient(
     { bot: { access_token: route.query.access_token } },
@@ -70,11 +76,9 @@ onMounted(async () => {
       bot: route.query.bot_id,
       streamer: route.query.streamer_id,
     },
-  )
-})
-</script>
-
-<!-- <style></style> -->
+  );
+});
+  </script>
 
 <template>
   <div class="chat">

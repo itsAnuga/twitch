@@ -5,16 +5,16 @@ import get from "./functions/get.js";
 
 dotenv.config();
 
-// let tokenApp = undefined;
+let tokenApp = undefined;
 let tokenUsers = undefined;
 
-// if (fs.existsSync("./tokens/tokenApp.json")) {
-//   try {
-//     tokenApp = JSON.parse(fs.readFileSync("./tokens/tokenApp.json", "utf8"));
-//   } catch (err) {
-//     console.error(err);
-//   }
-// }
+if (fs.existsSync("./tokens/tokenApp.json")) {
+  try {
+    tokenApp = JSON.parse(fs.readFileSync("./tokens/tokenApp.json", "utf8"));
+  } catch (err) {
+    console.error(err);
+  }
+}
 
 if (fs.existsSync("./tokens/tokenUsers.json")) {
   try {
@@ -30,21 +30,21 @@ if (fs.existsSync("./tokens/tokenUsers.json")) {
 //   process.exit(1);
 // }
 
-if (tokenUsers === undefined) {
-  process.exit(1);
-}
+// if (tokenUsers === undefined) {
+//   process.exit(1);
+// }
 
 const bot = await get("https://api.twitch.tv/helix/users", {
   headers: {
     Authorization: `Bearer ${tokenUsers.bot.access_token}`,
-    "Client-Id": `${process.env.BOT_CLIENT_ID}`,
+    "Client-Id": `${process.env.VITE_BOT_CLIENT_ID}`,
   },
 });
 
 const streamer = await get("https://api.twitch.tv/helix/users", {
   headers: {
     Authorization: `Bearer ${tokenUsers.streamer.access_token}`,
-    "Client-Id": `${process.env.STREAMER_CLIENT_ID}`,
+    "Client-Id": `${process.env.VITE_STREAMER_CLIENT_ID}`,
   },
 });
 
@@ -84,7 +84,7 @@ const registerEventSubListeners = async (websocketSessionId) => {
       }),
       headers: {
         Authorization: `Bearer ${tokenUsers.bot.access_token}`,
-        "Client-Id": `${process.env.BOT_CLIENT_ID}`,
+        "Client-Id": `${BOT_CLIENT_ID}`,
         "Content-Type": "application/json",
       },
       method: "POST",
@@ -117,7 +117,7 @@ const sendChatMessage = async (chatMessage) => {
     }),
     headers: {
       Authorization: `Bearer ${tokenUsers.bot.access_token}`,
-      "Client-Id": `${process.env.BOT_CLIENT_ID}`,
+      "Client-Id": `${BOT_CLIENT_ID}`,
       "Content-Type": "application/json",
     },
     method: "POST",

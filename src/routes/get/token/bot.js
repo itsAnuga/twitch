@@ -3,7 +3,7 @@ import { URLSearchParams } from "node:url";
 export default function (req, res) {
   //
   const uri = new URLSearchParams({
-    client_id: `${process.env.BOT_CLIENT_ID}`,
+    client_id: `${process.env.VITE_BOT_CLIENT_ID}`,
     redirect_uri: `http://localhost:3000/api/code?user=bot`,
     response_type: `code`,
     // response_type: `token`,
